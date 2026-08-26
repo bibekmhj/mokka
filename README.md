@@ -11,12 +11,12 @@ Every AWS service. In-memory. Milliseconds per test. No Docker.
 
 ## Why mokka exists
 
-Python has [Moto](https://github.com/getmoto/moto) - 8k+ stars, in-process AWS fakes, tests run in milliseconds. Java doesn't. When a Java developer [asked AWS on re:Post](https://repost.aws/questions/QUXKTChdh-SwSHklCkcsNR5Q/moto-equivalent-library-for-java-kotlin) for the same, AWS's answer was, in effect, *"there isn't one."*
+Python has [Moto](https://github.com/getmoto/moto) — 8k+ stars, in-process AWS fakes, tests run in milliseconds. Java doesn't. When a Java developer [asked AWS on re:Post](https://repost.aws/questions/QUXKTChdh-SwSHklCkcsNR5Q/moto-equivalent-library-for-java-kotlin) for the same, AWS's answer was, in effect, *"there isn't one."*
 
 Today JVM teams have two options:
 
-- **LocalStack + Testcontainers** - real behavior, but 20–60s of Docker startup per test suite, and [as of 2026](https://medium.com/@raphael.moutard/i-want-to-pay-for-localstack-but-i-wont-051f8e10d71e) their key features moved behind a paywall.
-- **Hand-rolled Mockito** - fragile, incomplete, drifts every SDK upgrade.
+- **LocalStack + Testcontainers** — real behavior, but 20–60s of Docker startup per test suite, and [as of 2026](https://medium.com/@raphael.moutard/i-want-to-pay-for-localstack-but-i-wont-051f8e10d71e) their key features moved behind a paywall.
+- **Hand-rolled Mockito** — fragile, incomplete, drifts every SDK upgrade.
 
 Mokka is the third option. **Drop-in fakes for the AWS SDK for Java v2, running inside your JVM, faster than the SDK can build a request.**
 
@@ -26,13 +26,13 @@ Mokka is the third option. **Drop-in fakes for the AWS SDK for Java v2, running 
 <dependency>
     <groupId>io.github.bibekmhj</groupId>
     <artifactId>mokka-s3</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <scope>test</scope>
 </dependency>
 <dependency>
     <groupId>io.github.bibekmhj</groupId>
     <artifactId>mokka-junit5</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -75,7 +75,7 @@ class RefundServiceTest {
 }
 ```
 
-No `@BeforeEach` boilerplate. No Docker. No LocalStack container to warm up. State resets between every `@Test`. Each fake is a real AWS SDK client type - you can inject it anywhere your production code takes an `S3Client`.
+No `@BeforeEach` boilerplate. No Docker. No LocalStack container to warm up. State resets between every `@Test`. Each fake is a real AWS SDK client type — you can inject it anywhere your production code takes an `S3Client`.
 
 ## What mokka fakes today (v0.1)
 
@@ -87,11 +87,11 @@ No `@BeforeEach` boilerplate. No Docker. No LocalStack container to warm up. Sta
 | **SNS** | createTopic, listTopics, subscribe, listSubscriptionsByTopic, publish | `fake.publishedMessages(arn)` for direct fan-out assertions. |
 | **Secrets Manager** | createSecret, getSecretValue, putSecretValue, updateSecret, describeSecret, listSecrets | Current version only in v0.1. |
 
-**Every other AWS service also compiles against mokka today.** Ask for a `KinesisClient` with `Mokka.fake(KinesisClient.class, "Kinesis")` and it will dependency-inject cleanly - methods throw `MokkaUnimplementedException` only when actually invoked, with a link to open a PR. See [ROADMAP.md](ROADMAP.md) for what's next.
+**Every other AWS service also compiles against mokka today.** Ask for a `KinesisClient` with `Mokka.fake(KinesisClient.class, "Kinesis")` and it will dependency-inject cleanly — methods throw `MokkaUnimplementedException` only when actually invoked, with a link to open a PR. See [ROADMAP.md](ROADMAP.md) for what's next.
 
 ## Why this shape
 
-Reflection-backed proxies means adding a new AWS service is one Maven module - a `State`, a `Handler`, a `Fake`, a `Provider`, a `META-INF/services` file. No touching the core, no touching the JUnit extension, no touching any other service. Contributors can own a service end-to-end.
+Reflection-backed proxies means adding a new AWS service is one Maven module — a `State`, a `Handler`, a `Fake`, a `Provider`, a `META-INF/services` file. No touching the core, no touching the JUnit extension, no touching any other service. Contributors can own a service end-to-end.
 
 ## Positioning against alternatives
 
@@ -110,13 +110,13 @@ Mokka is best for **fast unit / component tests**. Use LocalStack + Testcontaine
 
 ## Modules
 
-- `mokka-core` - proxy engine + SPI. Zero AWS SDK dependency.
-- `mokka-s3` - S3 fake.
-- `mokka-dynamodb` - DynamoDB fake.
-- `mokka-sqs` - SQS fake.
-- `mokka-sns` - SNS fake.
-- `mokka-secretsmanager` - Secrets Manager fake.
-- `mokka-junit5` - `@ExtendWith(MokkaExtension.class)` + `@MokkaClient` field injection.
+- `mokka-core` — proxy engine + SPI. Zero AWS SDK dependency.
+- `mokka-s3` — S3 fake.
+- `mokka-dynamodb` — DynamoDB fake.
+- `mokka-sqs` — SQS fake.
+- `mokka-sns` — SNS fake.
+- `mokka-secretsmanager` — Secrets Manager fake.
+- `mokka-junit5` — `@ExtendWith(MokkaExtension.class)` + `@MokkaClient` field injection.
 
 ## Roadmap
 
@@ -124,8 +124,8 @@ See [ROADMAP.md](ROADMAP.md). Next services on the shortlist: Lambda, Kinesis, E
 
 ## Contributing
 
-Adding a new service or filling in more operations is deliberately easy - see [CONTRIBUTING.md](CONTRIBUTING.md).
+Adding a new service or filling in more operations is deliberately easy — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
-Apache 2.0 - see [LICENSE](LICENSE).
+Apache 2.0 — see [LICENSE](LICENSE).

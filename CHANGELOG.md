@@ -5,6 +5,15 @@ All notable changes to mokka will be documented here. This project follows
 
 ## Unreleased
 
+## 0.1.1 — 2026-08-26
+
+### Fixed
+
+- Parent POM's `<scm>` block now sets `child.scm.*.inherit.append.path="false"`
+  so per-module Maven Central "Source Repository" links point at the repo root
+  instead of the non-existent `github.com/bibekmhj/mokka/mokka-<service>` paths
+  (which 404'd on GitHub). No code changes.
+
 ## 0.1.0 — 2026-08-26
 
 Initial release.
